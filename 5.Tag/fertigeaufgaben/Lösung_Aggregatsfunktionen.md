@@ -2,6 +2,54 @@
 
 **(Hinweis: Da das genaue Schema von `uebungSchuleDB` nicht explizit im Text steht, wurden hier allgemeingültige Tabellen- und Spaltennamen wie `lehrer`, `schueler`, `ort` mit plausiblen Attributen wie `gehalt`, `note`, `einwohner` usw. angenommen.)**
 
+```mermaid
+erDiagram
+    ORT {
+        int id PK
+        varchar name
+        int einwohner
+    }
+    HERSTELLER {
+        int id PK
+        varchar name "z.B. Samsung, HTC"
+    }
+    SMARTPHONE {
+        int id PK
+        int hersteller_id FK
+    }
+    FACH {
+        int id PK
+        varchar name "z.B. Mathe"
+    }
+    LEHRER {
+        int id PK
+        varchar vorname
+        varchar nachname
+        float gehalt
+        int fach_id FK
+    }
+    SCHUELER {
+        int id PK
+        varchar name
+        varchar nationalitaet
+        float note_deutsch
+        float note_mathe
+        int ort_id FK
+        int smartphone_id FK
+    }
+    UNTERRICHT {
+        int schueler_id PK, FK
+        int lehrer_id PK, FK
+    }
+
+    ORT ||--o{ SCHUELER : "wohnt in"
+    HERSTELLER ||--o{ SMARTPHONE : "produziert"
+    SMARTPHONE |o--o| SCHUELER : "besitzt"
+    FACH ||--o{ LEHRER : "unterrichtet"
+    SCHUELER ||--o{ UNTERRICHT : "besucht"
+    LEHRER ||--o{ UNTERRICHT : "hält"
+```
+
 1. Welches ist das niedrigste/höchste Gehalt eines Lehrers?
 ```sql
 SELECT MIN(gehalt) AS Niedrigstes_Gehalt, MAX(gehalt) AS Hoechstes_Gehalt 

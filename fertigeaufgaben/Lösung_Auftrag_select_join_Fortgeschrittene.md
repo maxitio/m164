@@ -1,6 +1,48 @@
 # Lösungen: Select join Fortgeschrittene
 
-**(Hinweis: Die exakten Spaltennamen für Fremdschlüssel und Tabellen müssen evt. an das genaue `buchladenDatenbank` Schema aus dem ERD/Dump angepasst werden. Dies ist die allgemeingültige Standardlösung basierend auf der Fragestellung.)**
+**(Hinweis: Die nachfolgenden Tabellenstrukturen zeigen das `buchladenDatenbank` Schema, auf dem die folgenden SELECT-Queries basieren.)**
+
+```mermaid
+erDiagram
+    VERLAG {
+        int id PK
+        varchar name
+        varchar ort
+    }
+    LIEFERANT {
+        int id PK
+        varchar name
+        varchar ort
+        varchar plz
+    }
+    SPARTE {
+        int id PK
+        varchar bezeichnung
+    }
+    AUTOR {
+        int id PK
+        varchar vorname
+        varchar nachname
+    }
+    BUCH {
+        int id PK
+        varchar titel
+        int erscheinungsjahr
+        int verlag_id FK
+        int lieferant_id FK
+        int sparte_id FK
+    }
+    BUCH_AUTOR {
+        int buch_id PK, FK
+        int autor_id PK, FK
+    }
+
+    VERLAG ||--o{ BUCH : "verlegt"
+    LIEFERANT ||--o{ BUCH : "liefert"
+    SPARTE ||--o{ BUCH : "zugeordnet zu"
+    BUCH ||--o{ BUCH_AUTOR : "geschrieben von"
+    AUTOR ||--o{ BUCH_AUTOR : "schreibt"
+```
 
 **1. Gesucht sind alle Lieferanten, die ihren Sitz in Freiburg haben.**
 ```sql

@@ -2,6 +2,46 @@
 
 **(Basierend auf dem typischen Schema der `schuleDatenbank`)**
 
+```mermaid
+erDiagram
+    ORT {
+        int id PK
+        varchar name
+        int plz
+    }
+    SCHUELER {
+        int id PK
+        varchar name
+        varchar nationalitaet
+        int ort_id FK
+    }
+    KLASSENZIMMER {
+        int id PK
+        varchar name
+    }
+    LEHRER {
+        int id PK
+        varchar name
+        float gehalt
+    }
+    NOTEN {
+        int schueler_id PK, FK
+        float deutsch
+        float mathe
+    }
+    UNTERRICHT {
+        int schueler_id PK, FK
+        int zimmer_id PK, FK
+        int lehrer_id PK, FK
+    }
+
+    ORT ||--o{ SCHUELER : "wohnt in"
+    SCHUELER ||--|| NOTEN : "hat"
+    SCHUELER ||--o{ UNTERRICHT : "besucht"
+    KLASSENZIMMER ||--o{ UNTERRICHT : "findet statt in"
+    LEHRER ||--o{ UNTERRICHT : "hält"
+```
+
 **1.a. Geben Sie eine Liste der Durchschnittsnoten aller Schüler aus; es werden aber nur die Schüler ausgegeben, deren Durchschnitt besser als 4 ist.**
 ```sql
 SELECT s.name, AVG((n.deutsch + n.mathe) / 2) AS Durchschnittsnote

@@ -12,6 +12,23 @@ INNER JOIN orte;
 
 **(Hinweis: Es wird davon ausgegangen, dass die Tabellen über eine `ort_id` oder ähnliches referenziert werden. Passe die Fremdschlüssel (`k.ort_id`) ggf. an das exakte Datenbankschema an.)**
 
+```mermaid
+erDiagram
+    ORTE {
+        int id PK
+        varchar name
+        varchar plz
+        int einwohner
+    }
+    KUNDEN {
+        int id PK
+        varchar name
+        int ort_id FK
+    }
+
+    ORTE ||--o{ KUNDEN : "wohnt in"
+```
+
 **a) Geben Sie Name, Postleitzahl und Wohnort aller Kunden aus.**
 ```sql
 SELECT k.name, o.plz, o.name AS ortname 
