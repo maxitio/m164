@@ -1,4 +1,4 @@
-# Lösungen: SUBQUERY
+ SUBQUERY
 
 **(Hinweis: Die nachfolgenden Tabellenstrukturen zeigen das `buchladenDatenbank` Schema, auf dem die folgenden SELECT-Queries basieren.)**
 
